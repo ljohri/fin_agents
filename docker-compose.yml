@@ -1,0 +1,111 @@
+# Shared fin_agents infrastructure. Use profiles to start subsets.
+#   docker compose --profile core up -d
+#   docker compose --profile litellm_proxy --profile observability --profile langfuse up -d
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    profiles: [core, litellm_proxy, langfuse]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-fin_agents}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-fin_agents}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init-databases.sql:/docker-entrypoint-initdb.d/init-databases.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fin_agents"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  litellm-proxy:
+    image: ghcr.io/berriai/litellm:main-latest
+    profiles: [litellm_proxy]
+    ports:
+      - "4000:4000"
+    environment:
+      DATABASE_URL: postgresql://fin_agents:fin_agents@postgres:5432/litellm
+      LITELLM_MASTER_KEY: ${LITELLM_API_KEY:-sk-fin-agents-local}
+    command: ["--config", "/app/config.yaml", "--port", "4000"]
+    volumes:
+      - ./docker/litellm/config.yaml:/app/config.yaml:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.96.0
+    profiles: [observability]
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./docker/otel/otel-collector-config.yaml:/etc/otel-collector-config.yaml:ro
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.54
+    profiles: [observability]
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.1
+    profiles: [langfuse]
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+
+  redis:
+    image: redis:7-alpine
+    profiles: [langfuse]
+    ports:
+      - "6379:6379"
+
+  minio:
+    image: minio/minio:latest
+    profiles: [langfuse]
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: miniosecret
+    ports:
+      - "9090:9000"
+      - "9091:9001"
+    volumes:
+      - minio_data:/data
+
+  langfuse:
+    image: langfuse/langfuse:2
+    profiles: [langfuse]
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://fin_agents:fin_agents@postgres:5432/langfuse
+      CLICKHOUSE_URL: http://clickhouse:8123
+      REDIS_CONNECTION_STRING: redis://redis:6379
+      NEXTAUTH_SECRET: ${LANGFUSE_NEXTAUTH_SECRET:-changeme-langfuse-secret-32chars-min}
+      SALT: ${LANGFUSE_SALT:-changeme-salt}
+      ENCRYPTION_KEY: ${LANGFUSE_ENCRYPTION_KEY:-00000000000000000000000000000000}
+      LANGFUSE_S3_EVENT_UPLOAD_BUCKET: langfuse
+      LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT: http://minio:9000
+      LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID: minio
+      LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY: miniosecret
+      LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE: "true"
+    depends_on:
+      - postgres
+      - clickhouse
+      - redis
+      - minio
+
+volumes:
+  postgres_data:
+  clickhouse_data:
+  minio_data:
