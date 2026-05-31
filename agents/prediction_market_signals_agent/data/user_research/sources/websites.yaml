@@ -1,0 +1,13 @@
+websites:
+  - name: Federal Reserve
+    url: https://www.federalreserve.gov/
+    category: official
+  - name: BLS CPI
+    url: https://www.bls.gov/cpi/
+    category: official
+  - name: Kalshi
+    url: https://kalshi.com/
+    category: prediction_market
+  - name: Polymarket
+    url: https://polymarket.com/
+    category: prediction_market

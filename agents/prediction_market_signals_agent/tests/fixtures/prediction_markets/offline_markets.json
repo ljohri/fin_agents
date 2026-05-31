@@ -1,0 +1,48 @@
+[
+  {
+    "venue": "kalshi",
+    "market_id": "KXFED-26MAR-HIKE",
+    "title": "Will the Fed hike rates in March 2026?",
+    "question": "Will the Fed hike rates in March 2026?",
+    "status": "active",
+    "fetched_at": "2026-05-31T12:00:00+00:00",
+    "implied_probability": 0.35,
+    "best_bid_probability": 0.34,
+    "best_ask_probability": 0.36,
+    "spread": 0.02,
+    "volume": 50000,
+    "liquidity": 12000,
+    "topic": "fed rate hike",
+    "source_url": "https://kalshi.com/markets/KXFED-26MAR-HIKE"
+  },
+  {
+    "venue": "polymarket",
+    "market_id": "us-recession-2026",
+    "title": "US recession in 2026?",
+    "question": "Will the US enter a recession in 2026?",
+    "status": "active",
+    "fetched_at": "2026-05-31T12:00:00+00:00",
+    "implied_probability": 0.28,
+    "best_bid_probability": 0.27,
+    "best_ask_probability": 0.29,
+    "spread": 0.02,
+    "volume": 250000,
+    "liquidity": 80000,
+    "topic": "recession",
+    "source_url": "https://polymarket.com/event/us-recession-2026"
+  },
+  {
+    "venue": "polymarket",
+    "market_id": "cpi-above-3-2026",
+    "title": "CPI above 3% in 2026?",
+    "question": "Will CPI average above 3% in 2026?",
+    "status": "active",
+    "fetched_at": "2026-05-31T12:00:00+00:00",
+    "implied_probability": 0.42,
+    "spread": 0.04,
+    "volume": 90000,
+    "liquidity": 15000,
+    "topic": "inflation",
+    "source_url": "https://polymarket.com/event/cpi-above-3-2026"
+  }
+]

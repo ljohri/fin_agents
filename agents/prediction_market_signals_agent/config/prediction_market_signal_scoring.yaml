@@ -1,0 +1,22 @@
+weights:
+  capital_market_relevance_score: 0.30
+  liquidity_score: 0.25
+  probability_momentum_score: 0.20
+  spread_quality_score: 0.15
+  cross_market_consistency_score: 0.10
+
+labels:
+  strong: 0.80
+  moderate: 0.60
+  weak: 0.40
+
+llm_analysis:
+  analyze_if:
+    deterministic_signal_strength_min: 0.45
+    capital_market_relevance_min: 0.50
+  always_analyze_top_n: 20
+  skip_if_liquidity_score_below: 0.20
+
+scraping:
+  enabled: false
+  require_explicit_user_approval: true

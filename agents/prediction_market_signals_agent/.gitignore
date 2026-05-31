@@ -1,0 +1,8 @@
+.venv/
+.pytest_cache/
+__pycache__/
+data/snapshots/
+data/intermediate/*
+!data/intermediate/.gitkeep
+data/reports/*
+!data/reports/.gitkeep

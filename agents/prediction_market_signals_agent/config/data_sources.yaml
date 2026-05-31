@@ -1,0 +1,12 @@
+venues:
+  - kalshi
+  - polymarket
+
+discovery:
+  max_markets_per_topic: 25
+  min_volume: 0
+
+storage:
+  duckdb_path: data/snapshots/markets.duckdb
+  parquet_dir: data/snapshots/parquet
+  raw_payload_dir: data/snapshots/raw

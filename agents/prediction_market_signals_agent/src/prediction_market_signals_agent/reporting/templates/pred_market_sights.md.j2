@@ -1,0 +1,56 @@
+# Prediction Market Sights
+
+Generated: {{ generated_at }}
+
+> Research only. Not investment advice.
+
+## Executive Summary
+
+{{ executive_summary }}
+
+## Signal Strength Overview
+
+| Rank | Signal | Topic | Venue | Probability | Deterministic Strength | LLM Strength | Liquidity | Capital-Market Relevance |
+|---:|---|---|---|---:|---:|---|---:|---:|
+{% for s in signals[:20] %}
+| {{ loop.index }} | {{ s.market_title[:40] }} | {{ s.topic }} | {{ s.venue }} | {{ s.implied_probability or 'n/a' }} | {{ s.deterministic_label }} ({{ '%.2f'|format(s.deterministic_signal_strength or 0) }}) | {{ s.llm_signal_strength or 'n/a' }} | {{ '%.2f'|format(s.liquidity_score or 0) }} | {{ '%.2f'|format(s.capital_market_relevance_score or 0) }} |
+{% endfor %}
+
+## Strong Signals
+{% for s in strong_signals %}
+### Signal: {{ s.market_title[:80] }}
+
+- Venue: {{ s.venue }}
+- Market: {{ s.market_id }}
+- Topic: {{ s.topic }}
+- Implied probability: {{ s.implied_probability }}
+- Deterministic score: {{ s.deterministic_signal_strength }} ({{ s.deterministic_label }})
+- LLM score: {{ s.llm_signal_strength or 'n/a' }}
+- Summary: {{ s.llm_analysis_summary or 'Pending LLM analysis' }}
+- Caveats: {{ s.key_caveats | join(', ') or 'none' }}
+
+{% endfor %}
+
+## Moderate Signals
+{% for s in moderate_signals %}
+- **{{ s.market_title[:60] }}** ({{ s.venue }}) — {{ s.implied_probability }} — {{ s.deterministic_label }}
+{% endfor %}
+
+## Weak or Noisy Signals
+{% for s in weak_signals %}
+- {{ s.market_title[:60] }} ({{ s.venue }}) — {{ s.deterministic_label }} — {{ s.key_caveats | join('; ') }}
+{% endfor %}
+
+## User View vs Prediction Markets
+
+{{ user_view_section }}
+
+## Methodology
+
+- Data: Kalshi and Polymarket via predmarket SDK + CLOB midpoints
+- Deterministic scoring before LLM analysis
+- LLM via LiteLLM (optional)
+
+## Disclaimers
+
+This is research only, not investment advice. Signals require human review.
