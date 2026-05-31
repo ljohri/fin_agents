@@ -1,0 +1,19 @@
+llm:
+  mode: local_library
+  default_model: openai/gpt-4o-mini
+  temperature: 0.2
+  max_tokens: 3000
+  timeout_seconds: 60
+  # Vertex AI / Gemini service account (optional)
+  # vertex_credentials_path: /path/to/service-account.json
+  # vertex_project: my-gcp-project
+  # vertex_location: us-central1
+
+proxy:
+  base_url: http://localhost:4000
+  api_key_env: LITELLM_API_KEY
+
+structured_output:
+  enforce_json: true
+  retry_on_invalid_json: true
+  max_retries: 2
