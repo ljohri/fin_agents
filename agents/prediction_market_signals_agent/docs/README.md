@@ -2,5 +2,7 @@
 
 See [architecture/prediction_market_signals.md](./architecture/prediction_market_signals.md) for the full design.
 
+- [Kalshi integration](./integrations/kalshi.md)
+- [Polymarket integration](./integrations/polymarket.md)
 - [Prompts](./prompts/prediction_market_signal_analysis.md)
 - [Pass 7 improvements](./architecture/pass7_improvements.md)

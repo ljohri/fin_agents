@@ -1,6 +1,6 @@
 # Prediction Market Sights
 
-Generated: 2026-05-31T17:05:56.653505+00:00
+Generated: 2026-05-31T17:09:20.140286+00:00
 
 > Research only. Not investment advice.
 
@@ -30,9 +30,9 @@ Top signals span 3 topics across 2 venues.
 
 ## Weak or Noisy Signals
 
-- Will the Fed hike rates in March 2026? (kalshi) — weak — Insufficient history for momentum
+- Will the Fed hike rates in March 2026? (kalshi) — weak — 
 
-- US recession in 2026? (polymarket) — weak — Insufficient history for momentum
+- US recession in 2026? (polymarket) — weak — 
 
 
 ## User View vs Prediction Markets

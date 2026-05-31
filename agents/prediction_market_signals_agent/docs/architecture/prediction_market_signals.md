@@ -20,6 +20,11 @@ The agent owns its market ingestion code under `market_data/`.
 - `PolymarketClobClient` enriches Polymarket markets with live CLOB midpoints.
 - Connectors wrap this internal client and add venue-native order book calls.
 
+Venue-specific details are documented in:
+
+- [Kalshi integration](../integrations/kalshi.md)
+- [Polymarket integration](../integrations/polymarket.md)
+
 ## Adding an algorithm
 
 1. Subclass `SignalAlgorithm` in `algorithms/`.
