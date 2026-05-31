@@ -10,7 +10,7 @@ class Venue(str, Enum):
 
 
 class PredictionMarket(BaseModel):
-    """Normalized view of a binary prediction market across venues."""
+    """Normalized binary market view used internally by the signals agent."""
 
     venue: Venue
     market_id: str
@@ -23,12 +23,3 @@ class PredictionMarket(BaseModel):
     close_time: datetime | None = None
     url: str | None = None
     raw: dict = Field(default_factory=dict, repr=False)
-
-
-class MarketResearchResult(BaseModel):
-    kalshi_markets: list[PredictionMarket] = Field(default_factory=list)
-    polymarket_markets: list[PredictionMarket] = Field(default_factory=list)
-
-    @property
-    def total_count(self) -> int:
-        return len(self.kalshi_markets) + len(self.polymarket_markets)

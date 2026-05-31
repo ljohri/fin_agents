@@ -12,9 +12,13 @@ Topic universe → Market discovery → Normalization → Deterministic algorith
   → Synthesis → Final report
 ```
 
-## Reuse of research agent
+## Market Data Ingestion
 
-Connectors wrap [`prediction_market_research_agent`](../../prediction_market_research_agent/) `MarketDataClient` (predmarket + CLOB). Order books use venue-native endpoints.
+The agent owns its market ingestion code under `market_data/`.
+
+- `MarketDataClient` uses `predmarket` for Kalshi and Polymarket REST data.
+- `PolymarketClobClient` enriches Polymarket markets with live CLOB midpoints.
+- Connectors wrap this internal client and add venue-native order book calls.
 
 ## Adding an algorithm
 
@@ -29,7 +33,7 @@ Connectors wrap [`prediction_market_research_agent`](../../prediction_market_res
 
 ## Pass 7 improvements (proposed)
 
-- Promote `MarketDataClient` into `fin_agents_common` to avoid agent-on-agent dependency.
+- Promote `MarketDataClient` into `fin_agents_common` if another agent needs prediction-market ingestion.
 - Unify async entry (CLI currently uses `asyncio.run` wrapper).
 - Persist momentum history with scheduled snapshot jobs.
 - Standardize OTel attribute names across agents.

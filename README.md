@@ -246,7 +246,6 @@ fin_agents/
 ├── docker-compose.yml
 ├── docs/
 ├── agents/
-│   ├── prediction_market_research_agent/
 │   └── prediction_market_signals_agent/
 └── .env.example
 ```
@@ -272,14 +271,6 @@ python agents/prediction_market_signals_agent/scripts/run_prediction_market_sign
 ```
 
 Report: `agents/prediction_market_signals_agent/data/reports/pred_market_sights.md`
-
-### Prediction market research
-
-```bash
-./agents/prediction_market_research_agent/scripts/install.sh
-source agents/prediction_market_research_agent/.venv/bin/activate
-pm-research list --limit 5
-```
 
 ### Shared infrastructure (optional)
 

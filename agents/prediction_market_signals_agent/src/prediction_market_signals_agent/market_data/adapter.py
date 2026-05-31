@@ -3,7 +3,7 @@ from datetime import datetime
 
 from predmarket.model.rest.contract import Contract
 
-from prediction_market_research_agent.models.market import PredictionMarket, Venue
+from prediction_market_signals_agent.market_data.models import PredictionMarket, Venue
 
 
 def _parse_dollar(value: str | float | None) -> float | None:
@@ -59,7 +59,6 @@ def contract_to_prediction_market(
 
     no_price = (1.0 - yes_price) if yes_price is not None else None
     market_id = contract.id
-
     volume: float | None = None
     liquidity: float | None = None
     close_time: datetime | str | None = None

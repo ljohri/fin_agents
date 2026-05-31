@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from prediction_market_research_agent.models.market import PredictionMarket
-from prediction_market_signals_agent.schemas.market import NormalizedMarket, Venue
+from prediction_market_signals_agent.market_data.models import PredictionMarket
+from prediction_market_signals_agent.schemas.market import NormalizedMarket
 
 
 def prediction_market_to_normalized(

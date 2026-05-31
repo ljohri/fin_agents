@@ -16,8 +16,7 @@ Each agent lives under `agents/` and maintains its own `docs/` directory for age
 
 | Agent | Docs |
 |-------|------|
-| [prediction_market_research_agent](../agents/prediction_market_research_agent/) | [Architecture](../agents/prediction_market_research_agent/docs/README.md) · Kalshi & Polymarket research |
-| [prediction_market_signals_agent](../agents/prediction_market_signals_agent/) | [Architecture](../agents/prediction_market_signals_agent/docs/architecture/prediction_market_signals.md) · Signal reports |
+| [prediction_market_signals_agent](../agents/prediction_market_signals_agent/) | [Architecture](../agents/prediction_market_signals_agent/docs/architecture/prediction_market_signals.md) · Market ingestion and signal reports |
 
 # Prediction Market Research Agents
 

@@ -1,12 +1,12 @@
 import httpx
 
-from prediction_market_research_agent.config import Settings
+from prediction_market_signals_agent.config import AgentSettings
 
 
 class PolymarketClobClient:
-    """Live Polymarket prices via the CLOB API (not covered by predmarket Gamma REST)."""
+    """Live Polymarket prices via the CLOB API."""
 
-    def __init__(self, settings: Settings, client: httpx.AsyncClient) -> None:
+    def __init__(self, settings: AgentSettings, client: httpx.AsyncClient) -> None:
         self._base = settings.polymarket_clob_api_url.rstrip("/")
         self._client = client
 

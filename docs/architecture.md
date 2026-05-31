@@ -28,7 +28,7 @@ fin_agents/
 ## Design principles
 
 1. **Independent agents** — Each agent can be installed, tested, and run on its own (`pip install -e agents/<agent_name>`).
-2. **Agent-local virtualenvs** — Agents may maintain their own `.venv` (e.g. `agents/prediction_market_research_agent/.venv`) so dependencies—including GitHub-sourced packages—do not collide with the repo root or other agents.
+2. **Agent-local virtualenvs** — Agents may maintain their own `.venv` (e.g. `agents/prediction_market_signals_agent/.venv`) so dependencies—including GitHub-sourced packages—do not collide with the repo root or other agents.
 3. **Explicit data contracts** — Use Pydantic models for inputs/outputs; avoid hidden shared global state between agents.
 4. **Provider abstraction** — External APIs live behind client/adapter modules inside each agent. Prefer unified SDKs (e.g. [predmarket](https://github.com/ashercn97/predmarket)) where they reduce duplication; keep thin custom layers when SDK coverage is incomplete.
 5. **Docs at two levels** — Root `docs/` for cross-cutting concerns; per-agent `docs/` for domain, architecture, and integration details.

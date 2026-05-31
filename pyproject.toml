@@ -17,7 +17,7 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["agents"]
-pythonpath = ["agents/prediction_market_research_agent/src"]
+pythonpath = ["agents/prediction_market_signals_agent/src", "libs/fin_agents_common/src"]
 
 [tool.ruff]
 line-length = 100

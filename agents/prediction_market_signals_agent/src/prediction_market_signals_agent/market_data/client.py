@@ -2,29 +2,26 @@ import httpx
 from predmarket import KalshiRest, PolymarketRest
 from predmarket.model.rest.contract import Contract
 
-from prediction_market_research_agent.clients.adapter import (
+from prediction_market_signals_agent.config import AgentSettings
+from prediction_market_signals_agent.market_data.adapter import (
     contract_to_prediction_market,
     polymarket_yes_token_id,
 )
-from prediction_market_research_agent.clients.clob import PolymarketClobClient
-from prediction_market_research_agent.config import Settings
-from prediction_market_research_agent.models.market import PredictionMarket
+from prediction_market_signals_agent.market_data.clob import PolymarketClobClient
+from prediction_market_signals_agent.market_data.models import PredictionMarket
 
 
 class MarketDataClient:
     """Fetches normalized markets via predmarket, with CLOB midpoints for Polymarket."""
 
-    def __init__(self, settings: Settings) -> None:
+    def __init__(self, settings: AgentSettings) -> None:
         self._settings = settings
 
     async def list_kalshi_markets(self, *, limit: int = 20) -> list[PredictionMarket]:
         async with httpx.AsyncClient(timeout=self._settings.http_timeout_seconds) as client:
             kalshi = KalshiRest(client)
             response = await kalshi.fetch_contracts(status="open", limit=limit)
-            return [
-                contract_to_prediction_market(contract)
-                for contract in response.data
-            ]
+            return [contract_to_prediction_market(contract) for contract in response.data]
 
     async def get_kalshi_market(self, ticker: str) -> PredictionMarket:
         async with httpx.AsyncClient(timeout=self._settings.http_timeout_seconds) as client:

@@ -22,4 +22,5 @@
 
 ## Dependencies
 
-- Move shared market clients from `prediction_market_research_agent` into `fin_agents_common` when a third agent needs them.
+- Market data ingestion now lives inside `prediction_market_signals_agent/market_data`.
+- Move these market clients into `fin_agents_common` when another agent needs prediction-market ingestion.
