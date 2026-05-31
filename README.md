@@ -237,74 +237,54 @@ The repository does not need to commit to one stack permanently. The core design
 
 ## Repository Structure
 
-A possible starting structure:
+This repo is a **multi-agent monorepo**. Each agent lives in its own directory under `agents/` with independent dependencies, tests, and documentation.
 
 ```text
-portfolio-research-agents/
-├── README.md
-├── LICENSE
-├── pyproject.toml
-├── .env.example
+fin_agents/
+├── libs/fin_agents_common/            # Shared LLM + observability
+├── config/                            # llm.yaml, observability.yaml
+├── docker-compose.yml
 ├── docs/
-│   ├── architecture.md
-│   ├── agent-design.md
-│   ├── data-model.md
-│   ├── safety-and-disclaimers.md
-│   └── roadmap.md
-├── examples/
-│   ├── sample-portfolio.csv
-│   ├── sample-investor-profile.yaml
-│   └── sample-report.md
-├── src/
-│   └── portfolio_agents/
-│       ├── agents/
-│       │   ├── portfolio_ingestion.py
-│       │   ├── market_research.py
-│       │   ├── risk_analysis.py
-│       │   ├── investor_profile.py
-│       │   ├── tax_context.py
-│       │   ├── scenario_analysis.py
-│       │   └── synthesis.py
-│       ├── schemas/
-│       │   ├── portfolio.py
-│       │   ├── investor.py
-│       │   ├── tax.py
-│       │   └── report.py
-│       ├── data/
-│       ├── tools/
-│       ├── orchestration/
-│       └── reporting/
-├── tests/
-└── scripts/
+├── agents/
+│   ├── prediction_market_research_agent/
+│   └── prediction_market_signals_agent/
+└── .env.example
 ```
+
+See [docs/architecture.md](./docs/architecture.md) for conventions on adding new agents.
 
 ---
 
 ## Getting Started
 
-The project is in early development. A typical local setup may look like this:
+Each agent has its **own virtual environment**. Shared LLM and observability live in `libs/fin_agents_common`.
+
+### Prediction market signals (offline demo)
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/portfolio-research-agents.git
-cd portfolio-research-agents
-
-python -m venv .venv
-source .venv/bin/activate
-
-pip install -e ".[dev]"
+git clone git@github.com:ljohri/fin_agents.git
+cd fin_agents
 cp .env.example .env
+
+./agents/prediction_market_signals_agent/scripts/install.sh
+source agents/prediction_market_signals_agent/.venv/bin/activate
+python agents/prediction_market_signals_agent/scripts/run_prediction_market_signals.py --offline-demo
 ```
 
-Run tests:
+Report: `agents/prediction_market_signals_agent/data/reports/pred_market_sights.md`
+
+### Prediction market research
 
 ```bash
-pytest
+./agents/prediction_market_research_agent/scripts/install.sh
+source agents/prediction_market_research_agent/.venv/bin/activate
+pm-research list --limit 5
 ```
 
-Run a sample analysis:
+### Shared infrastructure (optional)
 
 ```bash
-python scripts/run_sample_analysis.py   --portfolio examples/sample-portfolio.csv   --profile examples/sample-investor-profile.yaml   --output reports/sample-report.md
+docker compose --profile core --profile litellm_proxy --profile observability --profile langfuse up -d
 ```
 
 ---
