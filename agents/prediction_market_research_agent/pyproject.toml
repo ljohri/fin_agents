@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "prediction-market-research-agent"
+version = "0.1.0"
+description = "Research prediction markets via Kalshi and Polymarket APIs"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "predmarket @ git+https://github.com/ashercn97/predmarket.git",
+    "httpx>=0.28.1",
+    "pydantic>=2.11",
+    "pydantic-settings>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "pytest-httpx>=0.30",
+]
+
+[project.scripts]
+pm-research = "prediction_market_research_agent.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/prediction_market_research_agent"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
